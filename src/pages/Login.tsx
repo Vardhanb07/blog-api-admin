@@ -1,32 +1,84 @@
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import instance from "../utils/api";
+
 export default function Login() {
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col h-screen bg-neutral-900 text-white font-jbmono">
       <div className="flex-1 flex justify-center items-center">
         <h1 className="text-3xl">Log In</h1>
       </div>
-      <div className="flex-6 text-2xl flex justify-center items-center">
-        <form action="/api/login" method="post" className="flex flex-col gap-4 border-neutral-500 border p-4 rounded-sm">
+      <div className="flex-8 text-2xl flex justify-center items-center">
+        <form
+          className="flex flex-col gap-4 border-neutral-500 border p-4 rounded-sm"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
           <div className="flex flex-col gap-2">
-            <label htmlFor="username" className="">Username</label>
+            <label htmlFor="username">
+              Username <span className="text-red-600">*</span>
+            </label>
             <input
               type="text"
               id="username"
               name="username"
               autoComplete="on"
               className="border border-neutral-500 p-2 rounded-sm"
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+              required
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">
+              Password <span className="text-red-600">*</span>
+            </label>
             <input
               type="password"
               id="password"
               name="password"
               autoComplete="on"
               className="border border-neutral-500 p-2 rounded-sm"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              required
             />
           </div>
-          <button className="rounded-sm border px-4 py-2 border-neutral-500 cursor-pointer">Submit</button>
+          <button
+            className="rounded-sm border px-4 py-2 border-neutral-500 cursor-pointer"
+            onClick={async () => {
+              try {
+                const response = await instance.post("/login", {
+                  username: username,
+                  password: password,
+                });
+                const token: string = response.data.token;
+                setError(null);
+                localStorage.setItem("token", token);
+                navigate("/home");
+              } catch (err) {
+                const message: string = err.response.data.message.message;
+                setError(message);
+              }
+            }}
+          >
+            Submit
+          </button>
+          <div>
+            <p className="text-xl">
+              <span className="text-red-600">*</span> required fields
+            </p>
+          </div>
+          <div>
+            <p className="text-red-500 text-xl">{!error ? "" : error}</p>
+          </div>
         </form>
       </div>
     </div>
