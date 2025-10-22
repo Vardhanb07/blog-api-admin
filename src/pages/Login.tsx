@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import instance from "../utils/api";
+import type { LoginPropTypes } from "../utils/types";
 
-export default function Login() {
+export default function Login({ token, setToken }: LoginPropTypes) {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  if (token) {
+    return <Navigate to="/home" replace/>
+  }
   return (
     <div className="flex flex-col h-screen bg-neutral-900 text-white font-jbmono">
       <div className="flex-1 flex justify-center items-center">
@@ -59,8 +63,9 @@ export default function Login() {
                   username: username,
                   password: password,
                 });
-                const token: string = response.data.token;
+                const token: string  = response.data.token;
                 setError(null);
+                setToken(token);
                 localStorage.setItem("token", token);
                 navigate("/home");
               } catch (err) {
