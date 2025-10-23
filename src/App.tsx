@@ -4,7 +4,6 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import ProtectRoute from "./components/ProtectRoute";
 import NoMatch from "./pages/NoMatch";
-import Posts from "./pages/Posts";
 import CreatePost from "./pages/CreatePost";
 
 export default function App() {
@@ -24,24 +23,15 @@ export default function App() {
             </ProtectRoute>
           }
         />
-        <Route path="/post">
-          <Route
-            index
-            element={
-              <ProtectRoute token={token}>
-                <Posts />
-              </ProtectRoute>
-            }
-          />
-          <Route
-            path="create"
-            element={
-              <ProtectRoute token={token}>
-                <CreatePost />
-              </ProtectRoute>
-            }
-          />
-        </Route>
+        <Route
+          path="/post/create"
+          element={
+            <ProtectRoute token={token}>
+              <CreatePost token={token} />
+            </ProtectRoute>
+          }
+        />
+
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </BrowserRouter>

@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import Editor from "../components/Editor";
+import instance from "../utils/api";
+import type { CreatePostPropTypes } from "../utils/types";
 
-export default function CreatePost() {
+export default function CreatePost({ token }: CreatePostPropTypes) {
   const [published, setPublished] = useState("no");
   const [content, setContent] = useState("");
+  const [title, setTitle] = useState("");
+
   const navigate = useNavigate();
   return (
     <div className="font-jbmono m-4">
@@ -12,8 +16,22 @@ export default function CreatePost() {
         Create post
       </h1>
       <form
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
+          await instance.post(
+            "/post",
+            {
+              title: title,
+              content: content,
+              published: published === "yes" ? true : false,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          navigate("/home");
         }}
       >
         <div className="flex flex-col text-xl mb-2">
@@ -24,6 +42,9 @@ export default function CreatePost() {
             id="title"
             className="border p-3"
             required
+            onChange={(e) => {
+              setTitle(e.currentTarget.value);
+            }}
           />
         </div>
         <div className="flex flex-col gap-0.5">
@@ -70,12 +91,7 @@ export default function CreatePost() {
           >
             Go Back
           </button>
-          <button
-            className="px-4 py-2 border text-xl cursor-pointer"
-            onClick={() => {
-              navigate("/home");
-            }}
-          >
+          <button className="px-4 py-2 border text-xl cursor-pointer">
             Submit
           </button>
         </div>

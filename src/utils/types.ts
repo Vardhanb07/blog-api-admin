@@ -14,3 +14,7 @@ export interface EditorPropTypes {
   className?: string;
   setContent: React.Dispatch<React.SetStateAction<string>>;
 }
+
+export interface CreatePostPropTypes {
+  token: string | null;
+}

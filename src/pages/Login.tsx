@@ -12,7 +12,7 @@ export default function Login({ token, setToken }: LoginPropTypes) {
     return <Navigate to="/home" replace/>
   }
   return (
-    <div className="flex flex-col h-screen bg-neutral-900 text-white font-jbmono">
+    <div className="flex flex-col h-screen font-jbmono">
       <div className="flex-1 flex justify-center items-center">
         <h1 className="text-3xl">Log In</h1>
       </div>
