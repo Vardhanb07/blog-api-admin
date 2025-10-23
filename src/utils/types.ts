@@ -10,3 +10,7 @@ export interface LoginPropTypes {
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
+export interface EditorPropTypes {
+  className?: string;
+  setContent: React.Dispatch<React.SetStateAction<string>>;
+}
