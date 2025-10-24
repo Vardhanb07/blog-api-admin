@@ -19,7 +19,7 @@ export default function App() {
           path="/home"
           element={
             <ProtectRoute token={token}>
-              <Home />
+              <Home setToken={setToken} />
             </ProtectRoute>
           }
         />

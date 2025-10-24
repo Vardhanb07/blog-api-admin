@@ -18,3 +18,27 @@ export interface EditorPropTypes {
 export interface CreatePostPropTypes {
   token: string | null;
 }
+
+export interface HomePropTypes {
+  setToken: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+export interface NavbarPropTypes {
+  setToken: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+export type stateType = {
+  showPublished: boolean;
+};
+
+export type actionType = {
+  type: "posts" | "drafts";
+};
+
+export interface SidebarPropTypes {
+  dispatch: React.ActionDispatch<[action: actionType]>;
+}
+
+export interface BlogPreviewPropTypes {
+  title: string;
+}
