@@ -9,6 +9,9 @@ export default function CreatePost({ token }: CreatePostPropTypes) {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
 
+  const PUBLISHED = "yes",
+    NOT_PUBLISHED = "no";
+
   const navigate = useNavigate();
   return (
     <div className="font-jbmono m-4">
@@ -23,7 +26,7 @@ export default function CreatePost({ token }: CreatePostPropTypes) {
             {
               title: title,
               content: content,
-              published: published === "yes" ? true : false,
+              published: published === NOT_PUBLISHED,
             },
             {
               headers: {
@@ -55,30 +58,33 @@ export default function CreatePost({ token }: CreatePostPropTypes) {
           <fieldset className="border p-2">
             <legend>Is this a draft?</legend>
             <div className="flex gap-3">
-              <input
-                type="radio"
-                value="yes"
-                name="published"
-                checked={published === "yes"}
-                onChange={(e) => {
-                  setPublished(e.currentTarget.value);
-                }}
-                required
-              />
-              <label htmlFor="yes">Yes</label>
+              <label>
+                <input
+                  type="radio"
+                  value={PUBLISHED}
+                  name="published"
+                  onClick={(e) => {
+                    setPublished(e.currentTarget.value);
+                  }}
+                  required
+                />{" "}
+                Yes
+              </label>
             </div>
             <div className="flex gap-3">
-              <input
-                type="radio"
-                value="no"
-                name="published"
-                checked={published === "no"}
-                onChange={(e) => {
-                  setPublished(e.currentTarget.value);
-                }}
-                required
-              />
-              <label htmlFor="no">No</label>
+              <label>
+                <input
+                  type="radio"
+                  value={NOT_PUBLISHED}
+                  name="published"
+                  defaultChecked={true}
+                  onClick={(e) => {
+                    setPublished(e.currentTarget.value);
+                  }}
+                  required
+                />{" "}
+                No
+              </label>
             </div>
           </fieldset>
         </div>
