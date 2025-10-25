@@ -40,5 +40,6 @@ export interface SidebarPropTypes {
 }
 
 export interface BlogPreviewPropTypes {
+  id: number;
   title: string;
 }

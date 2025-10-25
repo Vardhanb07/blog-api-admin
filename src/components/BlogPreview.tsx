@@ -1,9 +1,12 @@
 import arrowOutwardImg from "../assets/arrow-outward.svg";
 import deleteImg from "../assets/delete.svg";
 import editImg from "../assets/edit.svg";
+import { useNavigate } from "react-router";
 import type { BlogPreviewPropTypes } from "../utils/types";
+import instance from "../utils/api";
 
-export default function BlogPreview({ title }: BlogPreviewPropTypes) {
+export default function BlogPreview({ id, title }: BlogPreviewPropTypes) {
+  const navigate = useNavigate()
   return (
     <div className="border p-2 flex flex-row">
       <p className="flex-6">{title}</p>
@@ -30,6 +33,16 @@ export default function BlogPreview({ title }: BlogPreviewPropTypes) {
             alt="Delete"
             title="Delete blog"
             className="cursor-pointer"
+            onClick={async () => {
+              //inefficient, prefer auto update rather than reload
+              const token = localStorage.getItem("token")
+              await instance.delete(`/post/${id}`, {
+                headers: {
+                  Authorization: `Bearer ${token}`
+                }
+              })
+              navigate(0)
+            }}
           />
         </div>
       </div>

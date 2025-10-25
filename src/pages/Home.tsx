@@ -18,7 +18,7 @@ function reducer(state: stateType, action: actionType): stateType {
 
 export default function Home({ setToken }: HomePropTypes) {
   const [state, dispatch] = useReducer(reducer, {
-    showPublished: true,
+    showPublished: false,
   });
 
   return (
