@@ -5,6 +5,9 @@ import Home from "./pages/Home";
 import ProtectRoute from "./components/ProtectRoute";
 import NoMatch from "./pages/NoMatch";
 import CreatePost from "./pages/CreatePost";
+import Post from "./pages/Post";
+import Draft from "./pages/Draft";
+import Edit from "./pages/Edit";
 
 export default function App() {
   const [token, setToken] = useState<string | null>(
@@ -27,11 +30,34 @@ export default function App() {
           path="/post/create"
           element={
             <ProtectRoute token={token}>
-              <CreatePost token={token} />
+              <CreatePost />
             </ProtectRoute>
           }
         />
-
+        <Route
+          path="/post/:postId"
+          element={
+            <ProtectRoute token={token}>
+              <Post />
+            </ProtectRoute>
+          }
+        />
+        <Route
+          path="/draft/:draftId"
+          element={
+            <ProtectRoute token={token}>
+              <Draft />
+            </ProtectRoute>
+          }
+        />
+        <Route
+          path="/edit/:id"
+          element={
+            <ProtectRoute token={token}>
+              <Edit />
+            </ProtectRoute>
+          }
+        />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </BrowserRouter>

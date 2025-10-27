@@ -9,7 +9,7 @@ export default function Login({ token, setToken }: LoginPropTypes) {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   if (token) {
-    return <Navigate to="/home" replace/>
+    return <Navigate to="/home" replace />;
   }
   return (
     <div className="flex flex-col h-screen font-jbmono">
@@ -63,7 +63,7 @@ export default function Login({ token, setToken }: LoginPropTypes) {
                   username: username,
                   password: password,
                 });
-                const token: string  = response.data.token;
+                const token: string = response.data.token;
                 setError(null);
                 setToken(token);
                 localStorage.setItem("token", token);

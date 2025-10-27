@@ -15,12 +15,14 @@ export default function Posts() {
     fetchData();
   }, []);
   return (
-    <div className="flex-5 flex text-xl justify-center p-4 ">
+    <div className="flex-5 flex text-xl justify-center p-4">
       {loading && <div>Loading...</div>}
       {!loading && (
         <div className="flex flex-col w-full">
           {data.map(({ id, title }) => {
-            return <BlogPreview title={title} id={id} key={id} />;
+            return (
+              <BlogPreview title={title} published={true} id={id} key={id} />
+            );
           })}
         </div>
       )}

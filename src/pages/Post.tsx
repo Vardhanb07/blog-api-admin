@@ -1,0 +1,74 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import instance from "../utils/api";
+import DOMPurify from "dompurify";
+import { marked } from "marked";
+
+export default function Post() {
+  const { postId } = useParams();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      const response = await instance.get(`/post/${postId}?published=true`);
+      const postContent = response.data.data;
+      setTitle(postContent.title);
+      const html = DOMPurify.sanitize(
+        marked.parse(postContent.content, {
+          async: false,
+        })
+      );
+      setContent(html);
+      setLoading(false);
+    }
+    fetchData();
+  }, [postId]);
+  return (
+    <div className="text-xl font-jbmono flex flex-col h-screen items-center p-4">
+      {loading && (
+        <div>
+          <p>Loading...</p>
+        </div>
+      )}
+      {!loading && (
+        <div className="flex flex-col w-full h-full">
+          <div className="flex-1 flex text-4xl justify-center items-center">
+            <h1>Draft: {postId}</h1>
+          </div>
+          <div className="flex-5 flex flex-col gap-6">
+            <div className="flex gap-3">
+              <p>Title: </p>
+              <p>{title}</p>
+            </div>
+            <div>
+              <p>Status: Published</p>
+            </div>
+            <div className="flex flex-col">
+              <p>Content: </p>
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+            </div>
+            <div className="flex justify-center items-center gap-6">
+              <button
+                onClick={() => {
+                  navigate(`/edit/${postId}`);
+                }}
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => {
+                  navigate("/home");
+                }}
+              >
+                Go Back
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

@@ -23,7 +23,7 @@ export default function Navbar({ setToken }: NavbarPropTypes) {
           <button
             className="border px-3 py-2 cursor-pointer"
             onClick={() => {
-              navigate("/post/create")
+              navigate("/post/create");
             }}
           >
             Create Post

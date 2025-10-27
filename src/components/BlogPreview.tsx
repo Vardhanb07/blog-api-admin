@@ -5,10 +5,14 @@ import { useNavigate } from "react-router";
 import type { BlogPreviewPropTypes } from "../utils/types";
 import instance from "../utils/api";
 
-export default function BlogPreview({ id, title }: BlogPreviewPropTypes) {
-  const navigate = useNavigate()
+export default function BlogPreview({
+  id,
+  title,
+  published,
+}: BlogPreviewPropTypes) {
+  const navigate = useNavigate();
   return (
-    <div className="border p-2 flex flex-row">
+    <div className="border p-2 flex flex-row mb-3">
       <p className="flex-6">{title}</p>
       <div className="flex-1 flex flex-row">
         <div className="flex-1">
@@ -17,6 +21,13 @@ export default function BlogPreview({ id, title }: BlogPreviewPropTypes) {
             alt="Open"
             title="Open blog"
             className="cursor-pointer"
+            onClick={() => {
+              if (published) {
+                navigate(`/post/${id}`);
+              } else {
+                navigate(`/draft/${id}`);
+              }
+            }}
           />
         </div>
         <div className="flex-1">
@@ -25,6 +36,9 @@ export default function BlogPreview({ id, title }: BlogPreviewPropTypes) {
             alt="Edit"
             title="Edit blog"
             className="cursor-pointer"
+            onClick={() => {
+              navigate(`/edit/${id}`);
+            }}
           />
         </div>
         <div className="flex-1">
@@ -35,13 +49,13 @@ export default function BlogPreview({ id, title }: BlogPreviewPropTypes) {
             className="cursor-pointer"
             onClick={async () => {
               //inefficient, prefer auto update rather than reload
-              const token = localStorage.getItem("token")
+              const token = localStorage.getItem("token");
               await instance.delete(`/post/${id}`, {
                 headers: {
-                  Authorization: `Bearer ${token}`
-                }
-              })
-              navigate(0)
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              navigate(0);
             }}
           />
         </div>

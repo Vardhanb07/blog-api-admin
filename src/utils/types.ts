@@ -10,15 +10,6 @@ export interface LoginPropTypes {
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-export interface EditorPropTypes {
-  className?: string;
-  setContent: React.Dispatch<React.SetStateAction<string>>;
-}
-
-export interface CreatePostPropTypes {
-  token: string | null;
-}
-
 export interface HomePropTypes {
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -42,4 +33,15 @@ export interface SidebarPropTypes {
 export interface BlogPreviewPropTypes {
   id: number;
   title: string;
+  published: boolean;
+}
+
+export interface FormPropTypes {
+  onSubmit: React.FormEventHandler<HTMLFormElement> | undefined;
+  setPublished: React.Dispatch<React.SetStateAction<string>>;
+  setContent: React.Dispatch<React.SetStateAction<string>>;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  isPublished: boolean;
+  textareaValue: string;
+  titleValue?: string;
 }

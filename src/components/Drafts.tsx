@@ -20,7 +20,9 @@ export default function Drafts() {
       {!loading && (
         <div className="flex flex-col w-full">
           {data.map(({ id, title }) => {
-            return <BlogPreview title={title} id={id} key={id} />;
+            return (
+              <BlogPreview title={title} published={false} id={id} key={id} />
+            );
           })}
         </div>
       )}
