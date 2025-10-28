@@ -7,7 +7,7 @@ import NoMatch from "./pages/NoMatch";
 import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
 import Draft from "./pages/Draft";
-import Edit from "./pages/Edit";
+import EditPost from "./pages/EditPost";
 
 export default function App() {
   const [token, setToken] = useState<string | null>(
@@ -54,7 +54,7 @@ export default function App() {
           path="/edit/:id"
           element={
             <ProtectRoute token={token}>
-              <Edit />
+              <EditPost />
             </ProtectRoute>
           }
         />

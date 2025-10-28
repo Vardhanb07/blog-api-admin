@@ -4,11 +4,9 @@ import instance from "../utils/api";
 import Form from "../components/Form";
 
 export default function CreatePost() {
-  const [published, setPublished] = useState("no");
+  const [published, setPublished] = useState(false);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
-
-  const PUBLISHED = "yes";
 
   const navigate = useNavigate();
   return (
@@ -25,7 +23,7 @@ export default function CreatePost() {
             {
               title: title,
               content: content,
-              published: published !== PUBLISHED,
+              published: published,
             },
             {
               headers: {
@@ -35,11 +33,11 @@ export default function CreatePost() {
           );
           navigate("/home");
         }}
-        textareaValue="Use markedjs to write this blog"
         setPublished={setPublished}
         setContent={setContent}
         setTitle={setTitle}
-        isPublished={true}
+        textareaValue="Use markedjs to write this blog"
+        publishedValue={false}
       />
     </div>
   );

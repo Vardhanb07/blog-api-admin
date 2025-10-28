@@ -38,10 +38,10 @@ export interface BlogPreviewPropTypes {
 
 export interface FormPropTypes {
   onSubmit: React.FormEventHandler<HTMLFormElement> | undefined;
-  setPublished: React.Dispatch<React.SetStateAction<string>>;
+  setPublished: React.Dispatch<React.SetStateAction<boolean>>;
   setContent: React.Dispatch<React.SetStateAction<string>>;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
-  isPublished: boolean;
+  publishedValue?: boolean;
   textareaValue: string;
   titleValue?: string;
 }

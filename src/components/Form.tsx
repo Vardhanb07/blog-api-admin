@@ -6,12 +6,12 @@ export default function Form({
   setPublished,
   setContent,
   setTitle,
-  isPublished,
+  publishedValue,
   textareaValue,
   titleValue,
 }: FormPropTypes) {
-  const PUBLISHED = "yes",
-    NOT_PUBLISHED = "no";
+  const DRAFT = "draft",
+    POST = "post";
   const navigate = useNavigate();
   return (
     <form onSubmit={onSubmit}>
@@ -46,16 +46,16 @@ export default function Form({
       </div>
       <div className="mt-3 mb-3 text-xl">
         <fieldset className="border p-2">
-          <legend>Is this a draft</legend>
+          <legend>Is this a draft?</legend>
           <div className="flex gap-3">
             <label>
               <input
                 type="radio"
-                value={PUBLISHED}
+                value={DRAFT}
                 name="published"
-                defaultChecked={isPublished}
-                onClick={(e) => {
-                  setPublished(e.currentTarget.value);
+                defaultChecked={!publishedValue}
+                onClick={() => {
+                  setPublished(false);
                 }}
                 required
               />{" "}
@@ -66,11 +66,11 @@ export default function Form({
             <label>
               <input
                 type="radio"
-                value={NOT_PUBLISHED}
+                value={POST}
                 name="published"
-                defaultChecked={!isPublished}
-                onClick={(e) => {
-                  setPublished(e.currentTarget.value);
+                defaultChecked={publishedValue}
+                onClick={() => {
+                  setPublished(true);
                 }}
                 required
               />{" "}
