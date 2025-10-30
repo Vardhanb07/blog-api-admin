@@ -8,7 +8,7 @@ export default function Posts() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const response = await instance.get("/post");
+      const response = await instance.get("/post?published=true");
       setData(response.data.data);
       setLoading(false);
     };

@@ -14,7 +14,7 @@ export default function Draft() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const response = await instance.get(`/post/${draftId}?published=false`);
+      const response = await instance.get(`/post/${draftId}`);
       const draftContent = response.data.data;
       setTitle(draftContent.title);
       const html = DOMPurify.sanitize(

@@ -13,7 +13,7 @@ export default function Post() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const response = await instance.get(`/post/${postId}?published=true`);
+      const response = await instance.get(`/post/${postId}`);
       const postContent = response.data.data;
       setTitle(postContent.title);
       const html = DOMPurify.sanitize(
@@ -36,7 +36,7 @@ export default function Post() {
       {!loading && (
         <div className="flex flex-col w-full h-full">
           <div className="flex-1 flex text-4xl justify-center items-center">
-            <h1>Draft: {postId}</h1>
+            <h1>Post: {postId}</h1>
           </div>
           <div className="flex-5 flex flex-col gap-6">
             <div className="flex gap-3">
@@ -52,6 +52,7 @@ export default function Post() {
             </div>
             <div className="flex justify-center items-center gap-6">
               <button
+                className="border px-4 py-2 cursor-pointer"
                 onClick={() => {
                   navigate(`/edit/${postId}`);
                 }}
@@ -59,6 +60,7 @@ export default function Post() {
                 Edit
               </button>
               <button
+                className="border px-4 py-2 cursor-pointer"
                 onClick={() => {
                   navigate("/home");
                 }}
