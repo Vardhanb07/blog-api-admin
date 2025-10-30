@@ -45,3 +45,9 @@ export interface FormPropTypes {
   textareaValue: string;
   titleValue?: string;
 }
+
+export interface CommentPropTypes {
+  id: number;
+  content: string;
+  postId: string | undefined;
+}

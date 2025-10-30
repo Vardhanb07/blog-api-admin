@@ -3,17 +3,19 @@ import { useNavigate, useParams } from "react-router";
 import instance from "../utils/api";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
+import Comment from "../components/Comment";
 
 export default function Post() {
   const { postId } = useParams();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [commentData, setCommentData] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const response = await instance.get(`/post/${postId}`);
+      let response = await instance.get(`/post/${postId}`);
       const postContent = response.data.data;
       setTitle(postContent.title);
       const html = DOMPurify.sanitize(
@@ -21,6 +23,9 @@ export default function Post() {
           async: false,
         })
       );
+      response = await instance.get(`/post/${postId}/comment`);
+      const commentContent = response.data.data;
+      setCommentData(commentContent);
       setContent(html);
       setLoading(false);
     }
@@ -49,6 +54,21 @@ export default function Post() {
             <div className="flex flex-col">
               <p>Content: </p>
               <div dangerouslySetInnerHTML={{ __html: content }} />
+            </div>
+            <div>
+              <p>Comments: </p>
+              <div className="flex flex-col gap-2">
+                {commentData.map(({ id, content }) => {
+                  return (
+                    <Comment
+                      content={content}
+                      postId={postId}
+                      id={id}
+                      key={id}
+                    />
+                  );
+                })}
+              </div>
             </div>
             <div className="flex justify-center items-center gap-6">
               <button
