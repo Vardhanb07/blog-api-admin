@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Navigate, useNavigate } from "react-router";
 import instance from "../utils/api";
 import type { LoginPropTypes } from "../utils/types";
+import axios from "axios";
 
 export default function Login({ token, setToken }: LoginPropTypes) {
   const [username, setUsername] = useState<string>("");
@@ -69,7 +70,12 @@ export default function Login({ token, setToken }: LoginPropTypes) {
                 localStorage.setItem("token", token);
                 navigate("/home");
               } catch (err) {
-                const message: string = err.response.data.message.message;
+                let message = "";
+                if (axios.isAxiosError(err)) {
+                  if (err.response) {
+                    message = err.response.data.message.message;
+                  }
+                }
                 setError(message);
               }
             }}

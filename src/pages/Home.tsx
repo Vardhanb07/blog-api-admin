@@ -8,10 +8,12 @@ import type { HomePropTypes, stateType, actionType } from "../utils/types";
 function reducer(state: stateType, action: actionType): stateType {
   if (action.type === "posts") {
     return {
+      ...state,
       showPublished: true,
     };
   }
   return {
+    ...state,
     showPublished: false,
   };
 }
