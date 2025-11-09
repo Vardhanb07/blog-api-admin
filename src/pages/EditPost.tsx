@@ -40,7 +40,6 @@ export default function EditPost() {
             onSubmit={async (e) => {
               e.preventDefault();
               const token = localStorage.getItem("token");
-              console.log(published);
               await instance.put(
                 `/post/${id}`,
                 {

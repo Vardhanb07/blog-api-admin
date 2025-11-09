@@ -34,6 +34,8 @@ export interface BlogPreviewPropTypes {
   id: number;
   title: string;
   published: boolean;
+  refresh: boolean;
+  setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface FormPropTypes {

@@ -5,6 +5,7 @@ import instance from "../utils/api";
 export default function Posts() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [refresh, setRefresh] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -13,7 +14,7 @@ export default function Posts() {
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [refresh]);
   return (
     <div className="flex-5 flex text-xl justify-center p-4">
       {loading && <div>Loading...</div>}
@@ -21,7 +22,7 @@ export default function Posts() {
         <div className="flex flex-col w-full">
           {data.map(({ id, title }) => {
             return (
-              <BlogPreview title={title} published={true} id={id} key={id} />
+              <BlogPreview title={title} published={true} id={id} refresh={refresh} setRefresh={setRefresh} key={id} />
             );
           })}
         </div>

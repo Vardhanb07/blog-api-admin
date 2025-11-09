@@ -18,11 +18,14 @@ export default defineConfig(({ mode }) => {
       proxy: {
         "/api": {
           target: env.SERVER_URI,
-          changeOrigin: true ,
+          changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
       },
       port: Number(env.PORT),
+    },
+    build: {
+      sourcemap: "inline",
     },
   };
 });

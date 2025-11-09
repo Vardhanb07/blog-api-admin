@@ -9,6 +9,8 @@ export default function BlogPreview({
   id,
   title,
   published,
+  refresh,
+  setRefresh,
 }: BlogPreviewPropTypes) {
   const navigate = useNavigate();
   return (
@@ -48,14 +50,17 @@ export default function BlogPreview({
             title="Delete blog"
             className="cursor-pointer"
             onClick={async () => {
-              //inefficient, prefer auto update rather than reload
               const token = localStorage.getItem("token");
               await instance.delete(`/post/${id}`, {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
               });
-              navigate(0);
+              if (refresh) {
+                setRefresh(false);
+              } else {
+                setRefresh(true);
+              }
             }}
           />
         </div>
